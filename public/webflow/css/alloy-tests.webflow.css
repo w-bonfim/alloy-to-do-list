@@ -560,7 +560,7 @@ ul {
 
 .remove-task {
   opacity: 0;
-  display: none;
+  display: block;
   position: absolute;
   inset: 10px 20px auto auto;
 }

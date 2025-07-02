@@ -1,5 +1,11 @@
 <template>
   <div class="content-tasks">
+    <!-- Título Principal -->
+    <div class="app-title">
+      <h1>Lista de Tarefas</h1>
+      <p>Organize suas atividades diárias</p>
+    </div>
+
     <div class="header">
       <h2>Tarefas</h2>
       <div
@@ -114,6 +120,26 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.app-title {
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 20px 0;
+}
+
+.app-title h1 {
+  margin: 0 0 10px 0;
+  font-size: 2.5rem;
+  color: #333;
+  font-weight: 700;
+}
+
+.app-title p {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #666;
+  opacity: 0.8;
+}
+
 .loading {
   text-align: center;
   padding: 20px;
