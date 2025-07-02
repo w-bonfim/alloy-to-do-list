@@ -9,7 +9,7 @@ class TaskService
 {
     public function getAll()
     {
-        return Cache::tags('tasks')->remember('tasks.all', 60, function () {
+        return Cache::remember('tasks.all', 60, function () {
             return Task::latest()->get();
         });
     }
@@ -18,7 +18,7 @@ class TaskService
     {
         $cacheKey = "tasks.{$task->id}";
 
-        return Cache::tags('tasks')->remember($cacheKey, 60, function () use ($task) {
+        return Cache::remember($cacheKey, 60, function () use ($task) {
             return $task;
         });
     }
@@ -27,7 +27,7 @@ class TaskService
     {
         $task = Task::create($data);
 
-        Cache::tags('tasks')->flush();
+        Cache::forget('tasks.all');
 
         return $task;
     }
@@ -36,7 +36,8 @@ class TaskService
     {
         $task->update($data);
 
-        Cache::tags('tasks')->flush();
+        Cache::forget('tasks.all');
+        Cache::forget("tasks.{$task->id}");
 
         return $task;
     }
@@ -45,14 +46,16 @@ class TaskService
     {
         $task->delete();
 
-        Cache::tags('tasks')->flush();
+        Cache::forget('tasks.all');
+        Cache::forget("tasks.{$task->id}");
     }
 
     public function toggle(Task $task): Task
     {
         $task->update(['completed' => !$task->completed]);
 
-        Cache::tags('tasks')->flush();
+        Cache::forget('tasks.all');
+        Cache::forget("tasks.{$task->id}");
 
         return $task;
     }
